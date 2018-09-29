@@ -1,0 +1,6 @@
+kindle: # email that recive document.
+sender: # email that send document.
+smtp: # smtp server
+port: # smtp port
+username: # username
+password: # password

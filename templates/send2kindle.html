@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Send2kindle</title>
+    </head>
+    <body>
+        <form action="{{ url_for("send2kindle") }}" method="POST">
+            <input type="text" name="url" />
+	    <input type="checkbox" id="mobi" name="mobi"
+               value="mobi" checked />
+            <label for="mobi">mobi</label>
+	    <input type="submit" value="提交"/>
+        </form>
+    </body>
+</html>
