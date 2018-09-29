@@ -19,9 +19,13 @@ def send2kindle():
     if request.method == 'GET':
         url = request.args.get('url')
         mobi = request.args.get('mobi')
+        go_back = request.referrer
         if url:
             url2mail(url, mobi)
-            return redirect(request.referrer)
+            if go_back:
+                return redirect(request.referrer)
+            else:
+                return 'done'
         else:
             return render_template('send2kindle.html')
     elif request.method == 'POST':
