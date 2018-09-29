@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from file2mail import makeMail, sendMail
 from url2html import saveHTML, html2mobi
 
@@ -21,7 +21,7 @@ def send2kindle():
         mobi = request.args.get('mobi')
         if url:
             url2mail(url, mobi)
-            return 'done'
+            return redirect(request.referrer)
         else:
             return render_template('send2kindle.html')
     elif request.method == 'POST':
@@ -31,5 +31,5 @@ def send2kindle():
         return 'done'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
 
