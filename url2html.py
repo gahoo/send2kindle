@@ -9,7 +9,8 @@ from readability import Document
 from subprocess import call
 
 def saveHTML(url, prefix=''):
-    response = requests.get(url)
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0'}
+    response = requests.get(url, headers=headers)
     doc = Document(response.text)
     filename = os.path.join(prefix, doc.title().encode('utf-8') + '.html')
     with open(filename, 'w') as f:
