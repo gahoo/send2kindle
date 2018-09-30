@@ -4,9 +4,11 @@ import argparse
 import sys
 import os
 import pdb
+from email.header import Header
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
 from email.utils import formatdate
 from email import encoders
 
@@ -31,11 +33,13 @@ def makeMail(file_path):
     elif file_path.endswith('.mobi') or file_path.endswith('.zip'):
         fp = open(file_path, "rb")
 
-    mobi_file = MIMEApplication(fp.read())
+    #mobi_file = MIMEApplication(fp.read())
+    msg_file = MIMEBase('application', 'octet-stream')
+    msg_file.set_payload(fp.read())
     fp.close()
     #encoders.encode_base64(mobi_file)
-    mobi_file.add_header('Content-Disposition', 'attachment', filename=('utf-8', '', file_name))
-    msg.attach(mobi_file)
+    msg_file.add_header('Content-Disposition', 'attachment', filename=(Header(file_name, 'utf-8').encode()))
+    msg.attach(msg_file)
 
     return msg
 
