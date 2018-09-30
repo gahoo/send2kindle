@@ -1,24 +1,23 @@
 # -*- coding: UTF-8 -*-
 
-import requests
 import os
 import sys
 import argparse
 import pdb
 from readability import Document
 from subprocess import call
+from webpage2html import generate
 
 def saveHTML(url, prefix=''):
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0'}
-    response = requests.get(url, headers=headers)
-    doc = Document(response.text)
-    filename = os.path.join(prefix, doc.title().encode('utf-8') + '.html')
+    text = generate(url)
+    doc = Document(text)
+    filename = os.path.join(prefix, doc.title() + '.html')
     with open(filename, 'w') as f:
         f.write(doc.summary().encode('utf-8'))
     return filename
 
 def html2mobi(filename):
-    call(["./kindlegen", filename])
+    call(["./kindlegen", filename, '-gif', '-locale', 'zh'])
 
 def main(args):
     html_file = saveHTML(args.url, args.prefix)
