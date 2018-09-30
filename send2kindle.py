@@ -2,8 +2,8 @@ from flask import Flask, request, render_template, redirect
 from file2mail import makeMail, sendMail
 from url2html import saveHTML, html2mobi
 
-def url2mail(url, mobi):
-    html_file = saveHTML(url, 'cache')
+def url2mail(url, img, mobi):
+    html_file = saveHTML(url, img, 'cache')
     if mobi:
         html2mobi(html_file)
         attached_file = html_file.rstrip('.html') + '.mobi'
@@ -19,9 +19,15 @@ def send2kindle():
     if request.method == 'GET':
         url = request.args.get('url')
         mobi = request.args.get('mobi')
+        img = request.args.get('img')
         go_back = request.referrer
+        if img == 'true':
+            img = True
+        else:
+            img = False
+
         if url:
-            url2mail(url, mobi)
+            url2mail(url, img, mobi)
             if go_back:
                 return redirect(request.referrer)
             else:
