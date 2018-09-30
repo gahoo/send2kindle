@@ -26,11 +26,15 @@ def makeMail(file_path):
     msg.attach(MIMEText('Want to write a customized email boddy? Then put it here.'))
 
     # Attach the .mobi file
-    fp = open(file_path, "rb")
+    if file_path.endswith('.html'):
+        fp = open(file_path, "r")
+    elif file_path.endswith('.mobi') or file_path.endswith('.zip'):
+        fp = open(file_path, "rb")
+
     mobi_file = MIMEApplication(fp.read())
     fp.close()
-    encoders.encode_base64(mobi_file)
-    mobi_file.add_header('Content-Disposition', 'attachment; filename="%s"' % file_name )
+    #encoders.encode_base64(mobi_file)
+    mobi_file.add_header('Content-Disposition', 'attachment', filename=('utf-8', '', file_name))
     msg.attach(mobi_file)
 
     return msg
