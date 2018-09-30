@@ -24,9 +24,6 @@ def makeMail(file_path):
     msg['Date'] = formatdate(localtime=True)
     msg['Subject'] = file_name
 
-    # Attache email body
-    msg.attach(MIMEText('Want to write a customized email boddy? Then put it here.'))
-
     # Attach the .mobi file
     if file_path.endswith('.html'):
         fp = open(file_path, "r")
