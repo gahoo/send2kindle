@@ -16,6 +16,15 @@ def fixHeader(clean_html):
     nodes.insert(0, head_node)
     return etree.tostring(nodes)
 
+def download_pdf(url, prefix=''):
+    pdf_file = os.path.join(prefix, url.split('/')[-1])
+    r = requests.get(url, stream=True)
+    with open(pdf_file, 'wb') as f:
+        for chunk in r.iter_content(chunk_size=1024):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+    return pdf_file
+
 def saveHTML(url, img=True, prefix=''):
     if img:
         text = generate(url)

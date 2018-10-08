@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect
 from file2mail import makeMail, sendMail
-from url2html import saveHTML, html2mobi
+from url2html import saveHTML, html2mobi, download_pdf
 
 def url2mail(url, img, mobi):
     if '.pdf' in url:
@@ -14,15 +14,6 @@ def url2mail(url, img, mobi):
 
     msg = makeMail(attached_file)
     sendMail(msg)
-
-def download_pdf(url):
-    pdf_file = url.split('/')[-1]
-    r = requests.get(url, stream=True)
-    with open(pdf_file, 'wb') as f:
-        for chunk in r.iter_content(chunk_size=1024): 
-            if chunk: # filter out keep-alive new chunks
-                f.write(chunk)
-    return pdf_file
 
 app = Flask(__name__)
 
