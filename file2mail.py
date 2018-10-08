@@ -27,7 +27,7 @@ def makeMail(file_path):
     # Attach the .mobi file
     if file_path.endswith('.html'):
         fp = open(file_path, "r")
-    elif file_path.endswith('.mobi') or file_path.endswith('.zip'):
+    elif any(map(lambda x:file_path.endswith(x), ['.mobi', '.zip', '.pdf'])):
         fp = open(file_path, "rb")
 
     #mobi_file = MIMEApplication(fp.read())
