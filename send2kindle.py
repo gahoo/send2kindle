@@ -3,14 +3,25 @@ from file2mail import makeMail, sendMail
 from url2html import saveHTML, html2mobi
 
 def url2mail(url, img, mobi):
-    html_file = saveHTML(url, img, 'cache')
-    if mobi:
-        html2mobi(html_file)
-        attached_file = html_file.rstrip('.html') + '.mobi'
+    if pdf in url:
+        attached_file = download_pdf(url)
     else:
-        attached_file = html_file
+        attached_file = saveHTML(url, img, 'cache')
+    if mobi:
+        html2mobi(attached_file)
+        attached_file = attached_file.rstrip('.html') + '.mobi'
+
     msg = makeMail(attached_file)
     sendMail(msg)
+
+def download_pdf(url):
+    pdf_file = url.split('/')[-1]
+    r = requests.get(url, stream=True)
+    with open(pdf_file, 'wb') as f:
+        for chunk in r.iter_content(chunk_size=1024): 
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+    return pdf_file
 
 app = Flask(__name__)
 
