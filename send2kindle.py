@@ -4,7 +4,7 @@ from url2html import saveHTML, html2mobi, download_pdf
 
 def url2mail(url, img, mobi):
     if '.pdf' in url:
-        attached_file = download_pdf(url)
+        attached_file = download_pdf(url, 'cache')
     else:
         attached_file = saveHTML(url, img, 'cache')
 
