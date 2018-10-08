@@ -30,9 +30,9 @@ def makeMail(file_path):
     elif any(map(lambda x:file_path.endswith(x), ['.mobi', '.zip', '.pdf'])):
         fp = open(file_path, "rb")
 
-    #mobi_file = MIMEApplication(fp.read())
-    msg_file = MIMEBase('application', 'octet-stream')
-    msg_file.set_payload(fp.read())
+    msg_file = MIMEApplication(fp.read())
+    #msg_file = MIMEBase('application', 'octet-stream')
+    #msg_file.set_payload(fp.read())
     fp.close()
     #encoders.encode_base64(mobi_file)
     msg_file.add_header('Content-Disposition', 'attachment', filename=(Header(file_name, 'utf-8').encode()))
