@@ -17,7 +17,7 @@ def fixHeader(clean_html):
     return etree.tostring(nodes)
 
 def download_pdf(url, prefix=''):
-    pdf_file = os.path.join(prefix, url.split('/')[-1])
+    pdf_file = os.path.join(prefix, url.split('/')[-1].split('?')[0])
     r = requests.get(url, stream=True)
     with open(pdf_file, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
