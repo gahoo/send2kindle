@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect
 from file2mail import makeMail, sendMail
 from url2html import saveHTML, html2mobi, download_pdf
 
+
 def url2mail(url, img, mobi):
     if '.pdf' in url:
         attached_file = download_pdf(url, 'cache')
@@ -15,7 +16,9 @@ def url2mail(url, img, mobi):
     msg = makeMail(attached_file)
     sendMail(msg)
 
+
 app = Flask(__name__)
+
 
 @app.route('/s2k', methods=['GET', 'POST'])
 def send2kindle():
@@ -40,6 +43,6 @@ def send2kindle():
         url2mail(url, img, mobi)
         return 'done'
 
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
-
